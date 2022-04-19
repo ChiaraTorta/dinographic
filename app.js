@@ -70,28 +70,38 @@
             console.warn('Something went wrong.', err);
         });
 
-    // Create Human Object
-
-    // Use IIFE to get human data from form
-
-
-    // Create Dino Compare Method 1
-    // NOTE: Weight in JSON file is in lbs, height in inches. 
-
-    
-    // Create Dino Compare Method 2
-    // NOTE: Weight in JSON file is in lbs, height in inches.
-
-    
-    // Create Dino Compare Method 3
-    // NOTE: Weight in JSON file is in lbs, height in inches.
-
-
-    // Generate Tiles for each Dino in Array
-  
-        // Add tiles to DOM
-
-    // Remove form from screen
-
-
 // On button click, prepare and display infographic
+// Use IIFE to keep variables in local scope
+(function () {
+    document.getElementById('btn').addEventListener("click", function (evt) {
+        const grid = document.getElementById('grid');
+        // Create Human Object
+        const human = {
+            name: document.getElementById('name').value,
+            imageSrc: './images/human.png',
+            weight: document.getElementById('weight').value,
+            height: document.getElementById('inches').value,
+            diet: document.getElementById('diet').value,
+        };
+
+        // Generate Tiles for each Dino in Array and add them to the DOM
+        dinos.forEach(function (dino) {
+            if (dino.species.toLowerCase() !== 'pigeon') {
+                dino.getRandomFact(human);
+            }
+            let dinoTile = document.createElement('div');
+            dinoTile.classList.add(['grid-item']);
+            dinoTile.innerHTML = `<h3>${dino.species}</h3><img src='${dino.imageSrc}'><p>${dino.fact}</p>`;
+            grid.appendChild(dinoTile);
+        })
+
+        // Create human tile and add it in the middle of the grid
+        const humanTile = document.createElement('div');
+        humanTile.classList.add(['grid-item']);
+        humanTile.innerHTML = `<h3>${human.name}</h3><img src='${human.imageSrc}'>`;
+        grid.insertBefore(humanTile, grid.children[4]);
+
+        // Remove form from screen
+        document.getElementById('dino-compare').style.display = 'none';
+    });
+})();
