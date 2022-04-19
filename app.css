@@ -138,6 +138,10 @@ input {
     border: 0;
 }
 
+input:invalid {
+    border: 1px solid red;
+}
+
 .form-field__short {
     width: 25%;
     margin-right: 3%;
