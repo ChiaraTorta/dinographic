@@ -54,7 +54,21 @@
     };
 
     // Create Dino Objects
-
+    const dinos = [];
+    fetch("dino.json")
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            return Promise.reject(response);
+        })
+        .then(function (data) {
+            data.Dinos.forEach(function (dino) {
+                dinos.push(new Dino(dino));
+            });
+        }).catch(function (err) {
+            console.warn('Something went wrong.', err);
+        });
 
     // Create Human Object
 
