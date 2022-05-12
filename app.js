@@ -52,27 +52,25 @@ function Dino(obj) {
     };
 };
 
-// Create Dino Objects
-const dinos = [];
-fetch("dino.json")
-    .then(function (response) {
-        if (response.ok) {
-            return response.json();
-        }
-        return Promise.reject(response);
-    })
-    .then(function (data) {
-        data.Dinos.forEach(function (dino) {
-            dinos.push(new Dino(dino));
-        });
-    }).catch(function (err) {
-        console.warn('Something went wrong.', err);
-    });
+// TODO create Dino objects as Dino methods
+// TODO handle events with Dino methods?
+// TODO fetch with async/await synthax
+
+function createDinos() {
+    return fetch("dino.json")
+    .then(response => response.json())
+    .then(data => initDinos(data))
+    .catch(error => console.log(error));
+}
+
+function initDinos(data) {
+    return data.Dinos.map(dino => new Dino(dino))
+}
 
 // On button click, prepare and display infographic
 // Use IIFE to keep variables in local scope
 (function () {
-    document.getElementById('btn').addEventListener("click", function (evt) {
+    document.getElementById('btn').addEventListener("click", async function (evt) {
         const grid = document.getElementById('grid');
         // Create Human Object
         const human = {
@@ -85,6 +83,8 @@ fetch("dino.json")
 
         if (human.name !== '' && human.weight !== 0 && human.weight !== 0) {
             // Generate Tiles for each Dino in Array and add them to the DOM
+            let dinos = await createDinos()
+
             dinos.forEach(function (dino) {
                 if (dino.species.toLowerCase() !== 'pigeon') {
                     dino.getRandomFact(human);
