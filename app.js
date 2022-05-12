@@ -1,3 +1,4 @@
+(function () {
 // Create Dino Prototype
 const Dino = {
     getRandomFact(human) {
@@ -96,28 +97,26 @@ function dinoTile(dino) {
 }
 
 // On button click, prepare and display infographic
-// Use IIFE to keep variables in local scope
-(function () {
-    document.getElementById('btn').addEventListener("click", async function (evt) {
-        const grid = document.getElementById('grid');
-        // Create Human Object
-        const human = createHuman();
+document.getElementById('btn').addEventListener("click", async function (evt) {
+    const grid = document.getElementById('grid');
+    // Create Human Object
+    const human = createHuman();
 
-        if (human.name !== '' && human.weight !== 0 && human.weight !== 0) {
-            // Generate Tiles for each Dino in Array and add them to the DOM
-            let dinos = await getDinos();
+    if (human.name !== '' && human.weight !== 0 && human.weight !== 0) {
+        // Generate Tiles for each Dino in Array and add them to the DOM
+        let dinos = await getDinos();
 
-            dinos.forEach(function (dino) {
-                if (dino.species.toLowerCase() !== 'pigeon') {
-                    dino.getRandomFact(human);
-                }
-                grid.appendChild(dinoTile(dino));
-            })
+        dinos.forEach(function (dino) {
+            if (dino.species.toLowerCase() !== 'pigeon') {
+                dino.getRandomFact(human);
+            }
+            grid.appendChild(dinoTile(dino));
+        })
 
-            grid.insertBefore(humanTile(human), grid.children[4]);
+        grid.insertBefore(humanTile(human), grid.children[4]);
 
-            // Remove form from screen
-            document.getElementById('dino-compare').style.display = 'none';
-        }
-    });
+        // Remove form from screen
+        document.getElementById('dino-compare').style.display = 'none';
+    }
+});
 })();
