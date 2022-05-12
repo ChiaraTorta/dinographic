@@ -51,7 +51,7 @@ const Dino = {
 function getDinos() {
     return fetch("dino.json")
     .then(response => response.json())
-    .then(data => initDinos(data))
+    .then(data => createDinos(data))
     .catch(error => console.log(error));
 }
 
