@@ -69,6 +69,17 @@ function createDinos(data) {
     })
     return arr;
 }
+
+function createHuman() {
+    return Object.create(null, {
+        name: { value: document.getElementById('name').value },
+        imageSrc: { value: './images/human.png' },
+        weight: { value: document.getElementById('weight').value },
+        height: { value: document.getElementById('inches').value} ,
+        diet: { value: document.getElementById('diet').value },
+    });
+}
+
 /* HTML Views */
 function humanTile(human) {
     const humanHtml = document.createElement('div');
@@ -90,13 +101,7 @@ function dinoTile(dino) {
     document.getElementById('btn').addEventListener("click", async function (evt) {
         const grid = document.getElementById('grid');
         // Create Human Object
-        const human = {
-            name: document.getElementById('name').value,
-            imageSrc: './images/human.png',
-            weight: document.getElementById('weight').value,
-            height: document.getElementById('inches').value,
-            diet: document.getElementById('diet').value,
-        };
+        const human = createHuman();
 
         if (human.name !== '' && human.weight !== 0 && human.weight !== 0) {
             // Generate Tiles for each Dino in Array and add them to the DOM
