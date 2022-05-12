@@ -60,14 +60,14 @@ function createDinos(data) {
     let arr = [];
     data.Dinos.map(dino => {
         arr.push(Object.create(Dino, {
-            species : {value: dino.species},
-            weight : {value: dino.weight},
-            height : {value: dino.height},
-            diet : {value: dino.diet},
-            where :{value: dino.where},
-            when : {value: dino.when},
-            fact : {value: dino.fact},
-            imageSrc : `./images/${dino.species.toLowerCase()}.png`,
+            species : { value: dino.species },
+            weight : {value: dino.weight },
+            height : {value: dino.height },
+            diet : { value: dino.diet },
+            where :{ value: dino.where },
+            when : { value: dino.when },
+            fact : { value: dino.fact },
+            imageSrc : { value: `./images/${dino.species.toLowerCase()}.png` },
         }))
     })
     return arr;
