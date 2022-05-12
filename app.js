@@ -44,9 +44,7 @@ const Dino = {
     }
 };
 
-// TODO create Dino objects as Dino methods
-// TODO handle events with Dino methods?
-// TODO fetch with async/await synthax
+/* Helper functions */ 
 
 function getDinos() {
     return fetch("dino.json")
@@ -55,7 +53,6 @@ function getDinos() {
     .catch(error => console.log(error));
 }
 
-// Use Object.create Method to create new Dino objects and the properties
 function createDinos(data) {
     let arr = [];
     data.Dinos.map(dino => {
@@ -71,6 +68,20 @@ function createDinos(data) {
         }))
     })
     return arr;
+}
+/* HTML Views */
+function humanTile(human) {
+    const humanHtml = document.createElement('div');
+    humanHtml.classList.add(['grid-item']);
+    humanHtml.innerHTML = `<h3>${human.name}</h3><img src='${human.imageSrc}'>`;
+    return humanHtml;
+}
+
+function dinoTile(dino) {
+    const dinoHtml = document.createElement('div');
+    dinoHtml.classList.add(['grid-item']);
+    dinoHtml.innerHTML = `<h3>${dino.species}</h3><img src='${dino.imageSrc}'><p>${dino.fact}</p>`;
+    return dinoHtml;
 }
 
 // On button click, prepare and display infographic
@@ -95,17 +106,10 @@ function createDinos(data) {
                 if (dino.species.toLowerCase() !== 'pigeon') {
                     dino.getRandomFact(human);
                 }
-                let dinoTile = document.createElement('div');
-                dinoTile.classList.add(['grid-item']);
-                dinoTile.innerHTML = `<h3>${dino.species}</h3><img src='${dino.imageSrc}'><p>${dino.fact}</p>`;
-                grid.appendChild(dinoTile);
+                grid.appendChild(dinoTile(dino));
             })
 
-            // Create human tile and add it in the middle of the grid
-            const humanTile = document.createElement('div');
-            humanTile.classList.add(['grid-item']);
-            humanTile.innerHTML = `<h3>${human.name}</h3><img src='${human.imageSrc}'>`;
-            grid.insertBefore(humanTile, grid.children[4]);
+            grid.insertBefore(humanTile(human), grid.children[4]);
 
             // Remove form from screen
             document.getElementById('dino-compare').style.display = 'none';
