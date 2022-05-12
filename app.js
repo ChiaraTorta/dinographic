@@ -1,22 +1,14 @@
-// Create Dino Constructor
-function Dino(obj) {
-    this.imageSrc = `./images/${obj.species.toLowerCase()}.png`;
-    this.species = obj.species;
-    this.weight = obj.weight;
-    this.height = obj.height;
-    this.diet = obj.diet;
-    this.where = obj.where;
-    this.when = obj.when;
-    this.fact = obj.fact;
-    this.getRandomFact = function (human) {
+// Create Dino Prototype
+const Dino = {
+    getRandomFact(human) {
         // array of methods
         const facts = [
-            obj.fact,
+            this.fact,
             'compareWeight',
             'compareHeight',
             'compareDiet',
-            `The ${obj.species} lived in ${obj.where}.`,
-            `The ${obj.species} lived during ${obj.when} era.`
+            `The ${this.species} lived in ${this.where}.`,
+            `The ${this.species} lived during ${this.when} era.`
         ];
         // get random fact from facts
         const factString = facts[Math.floor(Math.random() * facts.length)];
@@ -25,8 +17,8 @@ function Dino(obj) {
         } else {
             this.fact = factString;
         }
-    };
-    this.compareHeight = function (human) {
+    },
+    compareHeight(human) {
         if (this.height > human.height) {
             return `The ${this.species} is ${(this.height - human.height)} inches taller then you.`;
         }
@@ -34,8 +26,8 @@ function Dino(obj) {
             return `You are tall like ${this.species}`;
         }
         return `You are ${(human.height-this.height)} inches taller then ${this.species}.`;
-    };
-    this.compareWeight = function (human) {
+    },
+    compareWeight(human) {
         if (this.weight > human.weight) {
             return `The ${this.species} is ${(this.weight - human.weight)} lbs heavier then you.`;
         }
@@ -43,28 +35,42 @@ function Dino(obj) {
             return `You are heavy like ${this.species}.`;
         }
         return `You are ${(human.weight-this.weight)} lbs heavier then ${this.species}.`;
-    };
-    this.compareDiet = function (human) {
+    },
+    compareDiet(human) {
         if (this.diet = human.diet) {
             return `The ${this.species}'s diet is ${human.diet} like yours.`;
         }
         return `Unlike you the ${this.species}'s diet is ${this.diet}`;
-    };
+    }
 };
 
 // TODO create Dino objects as Dino methods
 // TODO handle events with Dino methods?
 // TODO fetch with async/await synthax
 
-function createDinos() {
+function getDinos() {
     return fetch("dino.json")
     .then(response => response.json())
     .then(data => initDinos(data))
     .catch(error => console.log(error));
 }
 
-function initDinos(data) {
-    return data.Dinos.map(dino => new Dino(dino))
+// Use Object.create Method to create new Dino objects and the properties
+function createDinos(data) {
+    let arr = [];
+    data.Dinos.map(dino => {
+        arr.push(Object.create(Dino, {
+            species : {value: dino.species},
+            weight : {value: dino.weight},
+            height : {value: dino.height},
+            diet : {value: dino.diet},
+            where :{value: dino.where},
+            when : {value: dino.when},
+            fact : {value: dino.fact},
+            imageSrc : `./images/${dino.species.toLowerCase()}.png`,
+        }))
+    })
+    return arr;
 }
 
 // On button click, prepare and display infographic
@@ -83,7 +89,7 @@ function initDinos(data) {
 
         if (human.name !== '' && human.weight !== 0 && human.weight !== 0) {
             // Generate Tiles for each Dino in Array and add them to the DOM
-            let dinos = await createDinos()
+            let dinos = await getDinos();
 
             dinos.forEach(function (dino) {
                 if (dino.species.toLowerCase() !== 'pigeon') {
