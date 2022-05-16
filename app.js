@@ -107,15 +107,15 @@
         });
     }
 
+    function getValue(name) {
+        return document.getElementById(name.toString()).value;
+    }
+
     function validateForm() {
         if (getValue('name') === '' && getValue('inches') !== 0 && getValue('weight') !== 0) {
             alert("All inputs must be filled out");
-            return false;
+            throw new Error('Error: Validation form failed');
         }
-    }
-
-    function getValue(name) {
-        return document.getElementById(name.toString()).value
     }
 
     /* HTML Views */
@@ -155,7 +155,7 @@
             // Remove form from screen
             document.getElementById('dino-compare').style.display = 'none';
         } catch (error) {
-            console.log(error)
+            console.log(error.message)
         }
     });
 })();
